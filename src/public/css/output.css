@@ -566,6 +566,10 @@ video {
   display: flex;
 }
 
+.cursor-pointer {
+  cursor: pointer;
+}
+
 .justify-between {
   justify-content: space-between;
 }
