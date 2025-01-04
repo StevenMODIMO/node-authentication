@@ -2,17 +2,19 @@ import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import authRoutes from "./routes/authRoutes";
-import path from "path"
+import path from "path";
 
 dotenv.config();
 
-// initalize app
 const app = express();
 
-app.set('views', path.join(__dirname, 'views')); 
+app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
+
+app.use(express.static(path.join(__dirname, "public")));
+
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'dist', 'public')));
+
 app.use(authRoutes);
 
 app.get("/", (req, res) => {

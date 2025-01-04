@@ -9,12 +9,11 @@ const dotenv_1 = __importDefault(require("dotenv"));
 const authRoutes_1 = __importDefault(require("./routes/authRoutes"));
 const path_1 = __importDefault(require("path"));
 dotenv_1.default.config();
-// initalize app
 const app = (0, express_1.default)();
-app.set('views', path_1.default.join(__dirname, 'views'));
+app.set("views", path_1.default.join(__dirname, "views"));
 app.set("view engine", "ejs");
+app.use(express_1.default.static(path_1.default.join(__dirname, "public")));
 app.use(express_1.default.json());
-app.use(express_1.default.static(path_1.default.join(__dirname, 'dist', 'public')));
 app.use(authRoutes_1.default);
 app.get("/", (req, res) => {
     res.status(200).render("home");
