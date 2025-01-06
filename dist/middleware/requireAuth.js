@@ -22,11 +22,9 @@ const requireAuth = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
     if (token) {
         jsonwebtoken_1.default.verify(token, process.env.JWT_SECRET, (err, encoded) => {
             if (err) {
-                console.log(err);
                 res.redirect("/login");
             }
             else {
-                console.log(encoded);
                 next();
             }
         });

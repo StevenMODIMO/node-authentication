@@ -9,10 +9,17 @@
   </head>
   <body>
     <nav class="flex justify-between p-3">
-      <h1 class="text-lg font-semibold">Node-jwt</h1>
+      <h1 class="text-lg font-semibold cursor-pointer">
+        <span
+          class="text-transparent bg-clip-text bg-gradient-to-r from-green-500 to-green-300"
+          >Node</span
+        >
+        authentication
+      </h1>
       <ul class="flex gap-3">
         <% if (user) { %>
         <li><a href="/user">Profile</a></li>
+        <li><a href="/logout">Logout</a></li>
         <% } else { %>
         <li><a href="/">Home</a></li>
         <li><a href="/signup">Signup</a></li>

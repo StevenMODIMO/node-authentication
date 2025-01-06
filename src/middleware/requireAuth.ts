@@ -19,10 +19,8 @@ const requireAuth = async (req: Request, res: Response, next: NextFunction) => {
       process.env.JWT_SECRET as string,
       (err: jwt.VerifyErrors | null, encoded: any) => {
         if (err) {
-          console.log(err);
           res.redirect("/login");
         } else {
-          console.log(encoded);
           next();
         }
       }

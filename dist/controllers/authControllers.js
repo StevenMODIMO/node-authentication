@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.postLogin = exports.postSignup = exports.getLogin = exports.getSignup = void 0;
+exports.postReset = exports.getReset = exports.getLogout = exports.postLogin = exports.postSignup = exports.getLogin = exports.getSignup = void 0;
 const User_1 = __importDefault(require("../models/User"));
 const validator_1 = __importDefault(require("validator"));
 const bcrypt_1 = __importDefault(require("bcrypt"));
@@ -26,11 +26,23 @@ const createToken = (id) => {
     });
 };
 const getSignup = (req, res) => {
-    res.status(200).render("signup", { title: "Get started" });
+    const user = res.locals.user;
+    if (user) {
+        res.redirect("/user");
+    }
+    else {
+        res.status(200).render("signup", { title: "Get started" });
+    }
 };
 exports.getSignup = getSignup;
 const getLogin = (req, res) => {
-    res.status(200).render("login", { title: "Login" });
+    const user = res.locals.user;
+    if (user) {
+        res.redirect("/user");
+    }
+    else {
+        res.status(200).render("login", { title: "Login" });
+    }
 };
 exports.getLogin = getLogin;
 const postSignup = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -79,3 +91,22 @@ const postLogin = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     return res.status(200).json(user);
 });
 exports.postLogin = postLogin;
+const getLogout = (req, res) => {
+    res.cookie("jwt", "", { maxAge: 1 });
+    res.redirect("/login");
+};
+exports.getLogout = getLogout;
+const getReset = (req, res) => {
+    const user = res.locals.user;
+    if (user) {
+        res.redirect("/user");
+    }
+    else {
+        res.status(200).render("reset-password", { title: "Reset your password" });
+    }
+};
+exports.getReset = getReset;
+const postReset = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    res.json("horray");
+});
+exports.postReset = postReset;

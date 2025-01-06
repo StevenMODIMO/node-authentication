@@ -1,3 +1,67 @@
 <%- include('partials/header') %>
-<h1>Signup page</h1>
+<form
+  class="rounded w-96 mx-auto flex flex-col gap-5 p-4 bg-gradient-to-r from-yellow-300 to-yellow-100"
+>
+  <label class="text-white font-semibold" for="email">Email</label>
+  <input
+    type="text"
+    name="email"
+    placeholder="example@gmail.com"
+    class="p-2 rounded outline-none"
+  />
+  <label class="text-white font-semibold" for="password">Password</label>
+  <input
+    type="password"
+    name="password"
+    placeholder="Bohn.2022!!"
+    class="p-2 rounded outline-none"
+  />
+  <button class="bg-yellow-500 p-2 rounded w-fit mx-auto text-white">
+    Create account
+  </button>
+  <div class="error"></div>
+</form>
+<script>
+  const form = document.querySelector("form");
+  const error = document.querySelector(".error");
+
+  const inputs = form.querySelectorAll("input");
+  inputs.forEach((input) => {
+    input.addEventListener("focus", () => {
+      error.textContent = "";
+    });
+  });
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const email = form.elements["email"].value;
+    const password = form.elements["password"].value;
+
+    try {
+      const response = await fetch("/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const json = await response.json();
+
+      if (!response.ok) {
+        error.textContent = json.message;
+      } else {
+        location.assign("/user");
+        console.log(json);
+      }
+
+      form.elements["email"].value = "";
+      form.elements["password"].value = "";
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    }
+  });
+</script>
+
 <%- include('partials/footer') %>

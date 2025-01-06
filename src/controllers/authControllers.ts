@@ -16,11 +16,21 @@ const createToken = (id: any) => {
 };
 
 const getSignup = (req: Request, res: Response) => {
-  res.status(200).render("signup", { title: "Get started" });
+  const user = res.locals.user;
+  if (user) {
+    res.redirect("/user");
+  } else {
+    res.status(200).render("signup", { title: "Get started" });
+  }
 };
 
 const getLogin = (req: Request, res: Response) => {
-  res.status(200).render("login", { title: "Login" });
+  const user = res.locals.user;
+  if (user) {
+    res.redirect("/user");
+  } else {
+    res.status(200).render("login", { title: "Login" });
+  }
 };
 
 const postSignup = async (req: Request, res: Response) => {
@@ -81,4 +91,22 @@ const postLogin = async (req: Request, res: Response) => {
   return res.status(200).json(user);
 };
 
-export { getSignup, getLogin, postSignup, postLogin };
+const getLogout = (req: Request, res: Response) => {
+  res.cookie("jwt", "", { maxAge: 1 });
+  res.redirect("/login");
+};
+
+const getReset = (req: Request, res: Response) => {
+  const user = res.locals.user;
+  if (user) {
+    res.redirect("/user");
+  } else {
+    res.status(200).render("reset-password", { title: "Reset your password" });
+  }
+};
+
+const postReset = async (req: Request, res: Response) => {
+  res.json("horray");
+};
+
+export { getSignup, getLogin, postSignup, postLogin, getLogout, getReset, postReset };

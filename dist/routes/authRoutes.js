@@ -7,4 +7,7 @@ router.get("/signup", authControllers_1.getSignup);
 router.get("/login", authControllers_1.getLogin);
 router.post("/signup", authControllers_1.postSignup);
 router.post("/login", authControllers_1.postLogin);
+router.get("/logout", authControllers_1.getLogout);
+router.get("/reset-password", authControllers_1.getReset);
+router.post("/reset", authControllers_1.postReset);
 exports.default = router;

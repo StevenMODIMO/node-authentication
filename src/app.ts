@@ -24,7 +24,7 @@ app.use("*", checkUser);
 app.use(authRoutes);
 
 app.get("/", (req, res) => {
-  res.status(200).render("home", { title: "Jwt" });
+  res.status(200).render("home", { title: "Node Authentication." });
 });
 
 app.get("/user", requireAuth, (req, res) => {
