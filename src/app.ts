@@ -21,6 +21,10 @@ app.get("/", (req, res) => {
   res.status(200).render("home");
 });
 
+app.get("/user", (req, res) => {
+  res.status(200).render("user")
+})
+
 app.use((req, res, next) => {
   console.log(req.method, req.path);
   next();
