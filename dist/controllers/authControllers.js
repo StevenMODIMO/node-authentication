@@ -16,6 +16,15 @@ exports.postLogin = exports.postSignup = exports.getLogin = exports.getSignup = 
 const User_1 = __importDefault(require("../models/User"));
 const validator_1 = __importDefault(require("validator"));
 const bcrypt_1 = __importDefault(require("bcrypt"));
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1.default.config();
+const maxAge = 3 * 24 * 60 * 60;
+const createToken = (id) => {
+    return jsonwebtoken_1.default.sign({ id }, process.env.JWT_SECRET, {
+        expiresIn: maxAge,
+    });
+};
 const getSignup = (req, res) => {
     res.status(200).render("signup");
 };
@@ -43,6 +52,8 @@ const postSignup = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         const salt = yield bcrypt_1.default.genSalt(10);
         const hash = yield bcrypt_1.default.hash(password, salt);
         const newUser = yield User_1.default.create({ email, password: hash });
+        const token = createToken(newUser._id);
+        res.cookie("jwt", token, { maxAge: maxAge * 1000 });
         res.status(200).json(newUser);
     }
     catch (error) {
@@ -63,6 +74,8 @@ const postLogin = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     if (!match) {
         return res.status(400).json({ message: "Incorrect password." });
     }
+    const token = createToken(user._id);
+    res.cookie("jwt", token, { maxAge: maxAge * 1000 });
     return res.status(200).json(user);
 });
 exports.postLogin = postLogin;

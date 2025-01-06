@@ -3,6 +3,8 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import authRoutes from "./routes/authRoutes";
 import path from "path";
+import cookieParser from "cookie-parser";
+import { requireAuth, checkUser } from "./middleware/requireAuth";
 
 dotenv.config();
 
@@ -15,15 +17,19 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use(express.json());
 
+app.use(cookieParser());
+
+app.use("*", checkUser);
+
 app.use(authRoutes);
 
 app.get("/", (req, res) => {
   res.status(200).render("home");
 });
 
-app.get("/user", (req, res) => {
-  res.status(200).render("user")
-})
+app.get("/user", requireAuth, (req, res) => {
+  res.status(200).render("user");
+});
 
 app.use((req, res, next) => {
   console.log(req.method, req.path);

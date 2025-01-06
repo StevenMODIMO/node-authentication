@@ -11,10 +11,13 @@
     <nav class="flex justify-between p-3">
       <h1 class="text-lg font-semibold">Node-jwt</h1>
       <ul class="flex gap-3">
+        <% if (user) { %>
+        <li><a href="/user">Profile</a></li>
+        <% } else { %>
         <li><a href="/">Home</a></li>
         <li><a href="/signup">Signup</a></li>
         <li><a href="/login">Login</a></li>
-        <li><a href="/user">Profile</a></li>
+        <% } %>
       </ul>
     </nav>
   </body>

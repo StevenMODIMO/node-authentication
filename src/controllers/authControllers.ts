@@ -2,6 +2,18 @@ import { Request, Response } from "express";
 import User from "../models/User";
 import validator from "validator";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+
+dotenv.config();
+
+const maxAge = 3 * 24 * 60 * 60;
+
+const createToken = (id: any) => {
+  return jwt.sign({ id }, process.env.JWT_SECRET as string, {
+    expiresIn: maxAge,
+  });
+};
 
 const getSignup = (req: Request, res: Response) => {
   res.status(200).render("signup");
@@ -36,6 +48,8 @@ const postSignup = async (req: Request, res: Response) => {
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(password, salt);
     const newUser = await User.create({ email, password: hash });
+    const token = createToken(newUser._id);
+    res.cookie("jwt", token, { maxAge: maxAge * 1000 });
     res.status(200).json(newUser);
   } catch (error) {
     res.status(400).json(error);
@@ -60,6 +74,9 @@ const postLogin = async (req: Request, res: Response) => {
   if (!match) {
     return res.status(400).json({ message: "Incorrect password." });
   }
+
+  const token = createToken(user._id);
+  res.cookie("jwt", token, { maxAge: maxAge * 1000 });
 
   return res.status(200).json(user);
 };
