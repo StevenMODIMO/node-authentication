@@ -26,11 +26,11 @@ const createToken = (id) => {
     });
 };
 const getSignup = (req, res) => {
-    res.status(200).render("signup");
+    res.status(200).render("signup", { title: "Get started" });
 };
 exports.getSignup = getSignup;
 const getLogin = (req, res) => {
-    res.status(200).render("login");
+    res.status(200).render("login", { title: "Login" });
 };
 exports.getLogin = getLogin;
 const postSignup = (req, res) => __awaiter(void 0, void 0, void 0, function* () {

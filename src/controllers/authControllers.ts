@@ -16,11 +16,11 @@ const createToken = (id: any) => {
 };
 
 const getSignup = (req: Request, res: Response) => {
-  res.status(200).render("signup");
+  res.status(200).render("signup", { title: "Get started" });
 };
 
 const getLogin = (req: Request, res: Response) => {
-  res.status(200).render("login");
+  res.status(200).render("login", { title: "Login" });
 };
 
 const postSignup = async (req: Request, res: Response) => {

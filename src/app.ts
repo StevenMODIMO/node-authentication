@@ -24,11 +24,11 @@ app.use("*", checkUser);
 app.use(authRoutes);
 
 app.get("/", (req, res) => {
-  res.status(200).render("home");
+  res.status(200).render("home", { title: "Jwt" });
 });
 
 app.get("/user", requireAuth, (req, res) => {
-  res.status(200).render("user");
+  res.status(200).render("user", { title: "Profile" });
 });
 
 app.use((req, res, next) => {

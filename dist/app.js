@@ -20,10 +20,10 @@ app.use((0, cookie_parser_1.default)());
 app.use("*", requireAuth_1.checkUser);
 app.use(authRoutes_1.default);
 app.get("/", (req, res) => {
-    res.status(200).render("home");
+    res.status(200).render("home", { title: "Jwt" });
 });
 app.get("/user", requireAuth_1.requireAuth, (req, res) => {
-    res.status(200).render("user");
+    res.status(200).render("user", { title: "Profile" });
 });
 app.use((req, res, next) => {
     console.log(req.method, req.path);
