@@ -96,17 +96,51 @@ const getLogout = (req: Request, res: Response) => {
   res.redirect("/login");
 };
 
-const getReset = (req: Request, res: Response) => {
+const getVerifyEmail = (req: Request, res: Response) => {
   const user = res.locals.user;
   if (user) {
     res.redirect("/user");
   } else {
-    res.status(200).render("reset-password", { title: "Reset your password" });
+    res.status(200).render("verify-email", { title: "Verify your email" });
   }
 };
 
-const postReset = async (req: Request, res: Response) => {
-  res.json("horray");
+const postVerifyEmail = async (req: Request, res: Response) => {
+  const { email } = await req.body;
+
+  if (!email) {
+    return res.status(400).json({ message: "Email must be filled" });
+  }
+
+  if (!validator.isEmail(email)) {
+    return res.status(400).json({ message: "Invalid email" });
+  }
+
+  const user = await User.findOne({ email });
+
+  if (!user) {
+    return res
+      .status(400)
+      .json({ message: "No account associated with this email" });
+  } else {
+    res.redirect(`/reset-password?email=${encodeURIComponent(email)}`);
+  }
 };
 
-export { getSignup, getLogin, postSignup, postLogin, getLogout, getReset, postReset };
+const getResetPassword = (req: Request, res: Response) => {
+  const email = req.query.email;
+  res
+    .status(200)
+    .render("reset-password", { title: "Reset your password", email });
+};
+
+export {
+  getSignup,
+  getLogin,
+  postSignup,
+  postLogin,
+  getLogout,
+  getVerifyEmail,
+  postVerifyEmail,
+  getResetPassword,
+};

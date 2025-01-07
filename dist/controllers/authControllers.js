@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.postReset = exports.getReset = exports.getLogout = exports.postLogin = exports.postSignup = exports.getLogin = exports.getSignup = void 0;
+exports.getResetPassword = exports.postVerifyEmail = exports.getVerifyEmail = exports.getLogout = exports.postLogin = exports.postSignup = exports.getLogin = exports.getSignup = void 0;
 const User_1 = __importDefault(require("../models/User"));
 const validator_1 = __importDefault(require("validator"));
 const bcrypt_1 = __importDefault(require("bcrypt"));
@@ -96,17 +96,39 @@ const getLogout = (req, res) => {
     res.redirect("/login");
 };
 exports.getLogout = getLogout;
-const getReset = (req, res) => {
+const getVerifyEmail = (req, res) => {
     const user = res.locals.user;
     if (user) {
         res.redirect("/user");
     }
     else {
-        res.status(200).render("reset-password", { title: "Reset your password" });
+        res.status(200).render("verify-email", { title: "Verify your email" });
     }
 };
-exports.getReset = getReset;
-const postReset = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    res.json("horray");
+exports.getVerifyEmail = getVerifyEmail;
+const postVerifyEmail = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { email } = yield req.body;
+    if (!email) {
+        return res.status(400).json({ message: "Email must be filled" });
+    }
+    if (!validator_1.default.isEmail(email)) {
+        return res.status(400).json({ message: "Invalid email" });
+    }
+    const user = yield User_1.default.findOne({ email });
+    if (!user) {
+        return res
+            .status(400)
+            .json({ message: "No account associated with this email" });
+    }
+    else {
+        res.redirect(`/reset-password?email=${encodeURIComponent(email)}`);
+    }
 });
-exports.postReset = postReset;
+exports.postVerifyEmail = postVerifyEmail;
+const getResetPassword = (req, res) => {
+    const email = req.query.email;
+    res
+        .status(200)
+        .render("reset-password", { title: "Reset your password", email });
+};
+exports.getResetPassword = getResetPassword;

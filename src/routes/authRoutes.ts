@@ -5,8 +5,9 @@ import {
   postSignup,
   postLogin,
   getLogout,
-  getReset,
-  postReset,
+  getVerifyEmail,
+  postVerifyEmail,
+  getResetPassword,
 } from "../controllers/authControllers";
 
 const router = Router();
@@ -21,8 +22,10 @@ router.post("/login", postLogin);
 
 router.get("/logout", getLogout);
 
-router.get("/reset-password", getReset);
+router.get("/verify-email", getVerifyEmail);
 
-router.post("/reset", postReset);
+router.post("/verify", postVerifyEmail);
+
+router.get("/reset-password", getResetPassword);
 
 export default router;

@@ -15,6 +15,7 @@ const app = (0, express_1.default)();
 app.set("views", path_1.default.join(__dirname, "views"));
 app.set("view engine", "ejs");
 app.use(express_1.default.static(path_1.default.join(__dirname, "public")));
+app.use(express_1.default.urlencoded({ extended: true }));
 app.use(express_1.default.json());
 app.use((0, cookie_parser_1.default)());
 app.use("*", requireAuth_1.checkUser);
