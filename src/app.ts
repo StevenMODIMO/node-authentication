@@ -21,6 +21,11 @@ app.use(express.json());
 
 app.use(cookieParser());
 
+app.use((req, res, next) => {
+  console.log(req.method, req.path);
+  next();
+});
+
 app.use("*", checkUser);
 
 app.use(authRoutes);
@@ -31,11 +36,6 @@ app.get("/", (req, res) => {
 
 app.get("/user", requireAuth, (req, res) => {
   res.status(200).render("user", { title: "Profile" });
-});
-
-app.use((req, res, next) => {
-  console.log(req.method, req.path);
-  next();
 });
 
 mongoose

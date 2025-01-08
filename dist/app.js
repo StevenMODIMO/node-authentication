@@ -18,6 +18,10 @@ app.use(express_1.default.static(path_1.default.join(__dirname, "public")));
 app.use(express_1.default.urlencoded({ extended: true }));
 app.use(express_1.default.json());
 app.use((0, cookie_parser_1.default)());
+app.use((req, res, next) => {
+    console.log(req.method, req.path);
+    next();
+});
 app.use("*", requireAuth_1.checkUser);
 app.use(authRoutes_1.default);
 app.get("/", (req, res) => {
@@ -25,10 +29,6 @@ app.get("/", (req, res) => {
 });
 app.get("/user", requireAuth_1.requireAuth, (req, res) => {
     res.status(200).render("user", { title: "Profile" });
-});
-app.use((req, res, next) => {
-    console.log(req.method, req.path);
-    next();
 });
 mongoose_1.default
     .connect(process.env.MONGO_URI)
