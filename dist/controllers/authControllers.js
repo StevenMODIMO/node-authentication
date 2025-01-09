@@ -98,11 +98,18 @@ const getLogout = (req, res) => {
 exports.getLogout = getLogout;
 const getVerifyEmail = (req, res) => {
     const user = res.locals.user;
+    const m = req.query.m;
+    let message = "";
+    if (m) {
+        message = "You need to verify your email first";
+    }
     if (user) {
         res.redirect("/user");
     }
     else {
-        res.status(200).render("verify-email", { title: "Verify your email" });
+        res
+            .status(200)
+            .render("verify-email", { title: "Verify your email", message });
     }
 };
 exports.getVerifyEmail = getVerifyEmail;
@@ -127,8 +134,13 @@ const postVerifyEmail = (req, res) => __awaiter(void 0, void 0, void 0, function
 exports.postVerifyEmail = postVerifyEmail;
 const getResetPassword = (req, res) => {
     const email = req.query.email;
-    res
-        .status(200)
-        .render("reset-password", { title: "Reset your password", email });
+    if (!email) {
+        res.redirect("/verify-email?m=1");
+    }
+    else {
+        res
+            .status(200)
+            .render("reset-password", { title: "Enter you new password" });
+    }
 };
 exports.getResetPassword = getResetPassword;

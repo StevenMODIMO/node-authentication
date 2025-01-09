@@ -98,10 +98,17 @@ const getLogout = (req: Request, res: Response) => {
 
 const getVerifyEmail = (req: Request, res: Response) => {
   const user = res.locals.user;
+  const m = req.query.m;
+  let message = "";
+  if (m) {
+    message = "You need to verify your email first";
+  }
   if (user) {
     res.redirect("/user");
   } else {
-    res.status(200).render("verify-email", { title: "Verify your email" });
+    res
+      .status(200)
+      .render("verify-email", { title: "Verify your email", message });
   }
 };
 
@@ -129,9 +136,13 @@ const postVerifyEmail = async (req: Request, res: Response) => {
 
 const getResetPassword = (req: Request, res: Response) => {
   const email = req.query.email;
-  res
-    .status(200)
-    .render("reset-password", { title: "Reset your password", email });
+  if (!email) {
+    res.redirect("/verify-email?m=1");
+  } else {
+    res
+      .status(200)
+      .render("reset-password", { title: "Enter you new password" });
+  }
 };
 
 export {
