@@ -5,6 +5,7 @@ import authRoutes from "./routes/authRoutes";
 import path from "path";
 import cookieParser from "cookie-parser";
 import { requireAuth, checkUser } from "./middleware/requireAuth";
+import { Request, Response, NextFunction } from "express";
 
 dotenv.config();
 
@@ -24,6 +25,11 @@ app.use(cookieParser());
 app.use((req, res, next) => {
   console.log(req.method, req.path);
   next();
+});
+
+app.use((err: any, req: Request, res: Response, next: NextFunction) => {
+  console.error(err.stack);
+  res.status(500).send("Something broke!");
 });
 
 app.use("*", checkUser);

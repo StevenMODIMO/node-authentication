@@ -22,6 +22,10 @@ app.use((req, res, next) => {
     console.log(req.method, req.path);
     next();
 });
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send("Something broke!");
+});
 app.use("*", requireAuth_1.checkUser);
 app.use(authRoutes_1.default);
 app.get("/", (req, res) => {
