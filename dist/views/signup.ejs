@@ -1,29 +1,51 @@
 <%- include('partials/header') %>
 <form
-  class="rounded w-96 mx-auto flex flex-col gap-5 p-4 bg-gradient-to-r from-yellow-300 to-yellow-100"
+  class="rounded-md shadow-md p-2 flex flex-col gap-4 w-[90%] h-full mt-[20%] mx-auto sm:mt-[10%] sm:w-[70%]"
 >
-  <label class="text-white font-semibold" for="email">Email</label>
+  <h1
+    class="text-lg text-center font-semibold text-transparent bg-clip-text bg-gradient-to-r from-green-500 to-green-300"
+  >
+    Get started.
+  </h1>
+  <label
+    class="text-sm text-transparent bg-clip-text bg-gradient-to-r from-green-500 to-green-300"
+    for="email"
+    >Email</label
+  >
   <input
+    class="outline-none p-1 rounded shadow"
     type="text"
     name="email"
     placeholder="example@gmail.com"
-    class="p-2 rounded outline-none"
   />
-  <label class="text-white font-semibold" for="password">Password</label>
+  <label
+    class="text-sm text-transparent bg-clip-text bg-gradient-to-r from-green-500 to-green-300"
+    for="password"
+    >Password</label
+  >
   <input
+    class="outline-none p-1 rounded shadow"
     type="password"
     name="password"
     placeholder="Bohn.2022!!"
-    class="p-2 rounded outline-none"
   />
-  <button class="bg-yellow-500 p-2 rounded w-fit mx-auto text-white">
-    Create account
+  <button
+    class="flex items-center gap-1 text-white tracking-wide bg-gradient-to-r from-green-500 to-green-300 rounded w-fit mx-auto p-1 hover:bg-gradient-to-r hover:from-green-300 hover:to-green-500 transition-all duration-75 ease-in-out"
+  >
+    <span
+      id="spinner"
+      class="hidden animate-spin border-4 border-dashed border-white rounded-full h-5 w-5"
+    ></span>
+    <span id="btn-text">Create account</span>
   </button>
-  <div class="error"></div>
+  <div class="error text-center text-red-400 animate-pulse"></div>
 </form>
 <script>
   const form = document.querySelector("form");
   const error = document.querySelector(".error");
+  const spinner = document.querySelector("#spinner");
+
+  const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
   const inputs = form.querySelectorAll("input");
   inputs.forEach((input) => {
@@ -37,6 +59,9 @@
 
     const email = form.elements["email"].value;
     const password = form.elements["password"].value;
+    spinner.classList.remove("hidden");
+
+    await delay(1000);
 
     try {
       const response = await fetch("/signup", {
@@ -51,6 +76,7 @@
 
       if (!response.ok) {
         error.textContent = json.message;
+        spinner.classList.add("hidden");
       } else {
         location.assign("/user");
         console.log(json);

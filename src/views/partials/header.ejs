@@ -14,7 +14,7 @@
     <link rel="shortcut icon" href="/images/favicon.svg" type="image/x-icon" />
     <title><%= title %></title>
   </head>
-  <body>
+  <body class="sm:w-[80%] sm:mx-auto">
     <nav class="flex items-center justify-between p-2">
       <h1 class="font-semibold cursor-pointer">
         <span
@@ -23,15 +23,15 @@
         >
         authentication
       </h1>
-      <div class="open block sm:hidden">
+      <div class="open block text-xl sm:hidden">
         <i class="fa-solid fa-bars"></i>
       </div>
-      <div class="close hidden sm:hidden">
+      <div class="close hidden text-xl sm:hidden">
         <i class="fa-solid fa-close"></i>
       </div>
       <ul
         id="mobile-nav"
-        class="absolute -left-[50%] top-0 pl-2 pt-10 h-full w-[50%] bg-green-700 bg-opacity-50 flex flex-col gap-3 transition-all duration-75 ease-in-out sm:hidden"
+        class="rounded-tr-md rounded-br-md absolute -left-[60%] top-0 pl-2 pt-10 h-full w-[60%] bg-green-700 bg-opacity-50 flex flex-col gap-3 transition-all duration-75 ease-in-out sm:hidden"
       >
         <% if (user) { %>
         <li><a href="/user">Profile</a></li>
@@ -112,14 +112,14 @@
     };
 
     open.addEventListener("click", () => {
-      nav.classList.remove("-left-[50%]");
+      nav.classList.remove("-left-[60%]");
       nav.classList.add("left-0");
       updateIcons();
     });
 
     close.addEventListener("click", () => {
       nav.classList.remove("left-0");
-      nav.classList.add("-left-[50%]");
+      nav.classList.add("-left-[60%]");
       updateIcons();
     });
 
