@@ -4,28 +4,127 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/css/output.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
     <link rel="shortcut icon" href="/images/favicon.svg" type="image/x-icon" />
     <title><%= title %></title>
   </head>
   <body>
-    <nav class="flex justify-between p-3">
-      <h1 class="text-lg font-semibold cursor-pointer">
+    <nav class="flex items-center justify-between p-2">
+      <h1 class="font-semibold cursor-pointer">
         <span
           class="text-transparent bg-clip-text bg-gradient-to-r from-green-500 to-green-300"
           >Node</span
         >
         authentication
       </h1>
-      <ul class="flex gap-3 font-semibold">
+      <div class="open block sm:hidden">
+        <i class="fa-solid fa-bars"></i>
+      </div>
+      <div class="close hidden sm:hidden">
+        <i class="fa-solid fa-close"></i>
+      </div>
+      <ul
+        id="mobile-nav"
+        class="absolute -left-[50%] top-0 pl-2 pt-10 h-full w-[50%] bg-green-700 bg-opacity-50 flex flex-col gap-3 transition-all duration-75 ease-in-out sm:hidden"
+      >
         <% if (user) { %>
         <li><a href="/user">Profile</a></li>
-        <li><a href="/logout">Logout</a></li>
+        <li>
+          <a href="/logout" class="flex items-center gap-1"
+            ><i class="fa-solid fa-right-from-bracket"></i>
+            <p>Log out</p></a
+          >
+        </li>
         <% } else { %>
-        <li><a href="/">Home</a></li>
-        <li><a href="/signup">Signup</a></li>
-        <li><a href="/login">Login</a></li>
+        <li>
+          <a href="/" class="flex items-center gap-1"
+            ><i class="fa-solid fa-house"></i>
+            <p>Home</p></a
+          >
+        </li>
+        <li>
+          <a href="/signup" class="flex items-center gap-1"
+            ><i class="fa-solid fa-user"></i>
+            <p>Signup</p></a
+          >
+        </li>
+        <li>
+          <a href="/login" class="flex items-center gap-1"
+            ><i class="fa-solid fa-right-to-bracket"></i>
+            <p>Log In</p></a
+          >
+        </li>
+        <% } %>
+      </ul>
+      <ul class="hidden sm:flex gap-4 text-sm">
+        <% if (user) { %>
+        <li><a href="/user">Profile</a></li>
+        <li>
+          <a href="/logout" class="flex items-center gap-1"
+            ><i class="fa-solid fa-right-from-bracket"></i>
+            <p>Log out</p></a
+          >
+        </li>
+        <% } else { %>
+        <li>
+          <a href="/" class="flex items-center gap-1"
+            ><i class="fa-solid fa-house"></i>
+            <p>Home</p></a
+          >
+        </li>
+        <li>
+          <a href="/signup" class="flex items-center gap-1"
+            ><i class="fa-solid fa-user"></i>
+            <p>Signup</p></a
+          >
+        </li>
+        <li>
+          <a href="/login" class="flex items-center gap-1"
+            ><i class="fa-solid fa-right-to-bracket"></i>
+            <p>Log In</p></a
+          >
+        </li>
         <% } %>
       </ul>
     </nav>
   </body>
+  <script>
+    const open = document.querySelector(".open");
+    const close = document.querySelector(".close");
+    const nav = document.querySelector("#mobile-nav");
+
+    const updateIcons = () => {
+      if (nav.classList.contains("left-0")) {
+        // If the nav is open, show the close icon
+        open.classList.add("hidden");
+        close.classList.remove("hidden");
+      } else {
+        // If the nav is closed, show the open icon
+        close.classList.add("hidden");
+        open.classList.remove("hidden");
+      }
+    };
+
+    open.addEventListener("click", () => {
+      nav.classList.remove("-left-[50%]");
+      nav.classList.add("left-0");
+      updateIcons();
+    });
+
+    close.addEventListener("click", () => {
+      nav.classList.remove("left-0");
+      nav.classList.add("-left-[50%]");
+      updateIcons();
+    });
+
+    document.addEventListener("DOMContentLoaded", () => {
+      updateIcons();
+    });
+  </script>
 </html>

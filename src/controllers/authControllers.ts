@@ -96,62 +96,10 @@ const getLogout = (req: Request, res: Response) => {
   res.redirect("/login");
 };
 
-const getVerifyEmail = (req: Request, res: Response) => {
-  const user = res.locals.user;
-  const m = req.query.m;
-  let message = "";
-  if (m) {
-    message = "You need to verify your email first";
-  }
-  if (user) {
-    res.redirect("/user");
-  } else {
-    res
-      .status(200)
-      .render("verify-email", { title: "Verify your email", message });
-  }
-};
-
-const postVerifyEmail = async (req: Request, res: Response) => {
-  const { email } = await req.body;
-
-  if (!email) {
-    return res.status(400).json({ message: "Email must be filled" });
-  }
-
-  if (!validator.isEmail(email)) {
-    return res.status(400).json({ message: "Invalid email" });
-  }
-
-  const user = await User.findOne({ email });
-
-  if (!user) {
-    return res
-      .status(400)
-      .json({ message: "No account associated with this email" });
-  } else {
-    res.redirect(`/reset-password?email=${encodeURIComponent(email)}`);
-  }
-};
-
-const getResetPassword = (req: Request, res: Response) => {
-  const email = req.query.email;
-  if (!email) {
-    res.redirect("/verify-email?m=1");
-  } else {
-    res
-      .status(200)
-      .render("reset-password", { title: "Enter you new password" });
-  }
-};
-
 export {
   getSignup,
   getLogin,
   postSignup,
   postLogin,
   getLogout,
-  getVerifyEmail,
-  postVerifyEmail,
-  getResetPassword,
 };
