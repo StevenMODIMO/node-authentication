@@ -1,12 +1,54 @@
 <%- include('partials/header') %>
+<section class="flex gap-3 p-2">
+  <aside class="w-[20%] h-96 p-1 cursor-pointer border-r-2">
+    <div
+      data-tab="tab1"
+      class="tab-button p-1 text-green-500 rounded hover:bg-gradient-to-r hover:from-green-300 hover:to-green-100"
+    >
+      Profile
+    </div>
+    <div
+      data-tab="tab2"
+      class="tab-button p-1 text-green-500 rounded hover:bg-gradient-to-r hover:from-green-300 hover:to-green-100"
+    >
+      Account
+    </div>
+    <div
+      data-tab="tab3"
+      class="tab-button p-1 text-green-500 rounded hover:bg-gradient-to-r hover:from-green-300 hover:to-green-100"
+    >
+      Settings
+    </div>
+  </aside>
+  <main class="w-[70%]">
+    <div class="tab-pane block" id="tab1">
+      <p><%= user.email %></p>
+      <p><%= user.id %></p>
+    </div>
+    <div class="tab-pane hidden" id="tab2">Account details go here.</div>
+    <div class="tab-pane hidden" id="tab3">Settings details go here.</div>
+  </main>
+</section>
 
-<h1>User Profile</h1>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const buttons = document.querySelectorAll(".tab-button");
+    const panes = document.querySelectorAll(".tab-pane");
 
-<p class="font-semibold text-xl">
-  <span class="font-bold">Welcome,</span><%= user.email %>
-</p>
-<p class="font-semibold text-xl">
-  <span class="font-bold">UserId:</span>,<%= user.id %>
-</p>
+    buttons[0].classList.add("bg-green-100", "font-bold");
+    panes[0].classList.remove("hidden");
 
+    buttons.forEach((button) => {
+      button.addEventListener("click", () => {
+        buttons.forEach((btn) =>
+          btn.classList.remove("bg-green-100", "font-bold")
+        );
+        panes.forEach((pane) => pane.classList.add("hidden"));
+        button.classList.add("bg-green-100", "font-bold");
+        const targetTab = button.getAttribute("data-tab");
+        document.getElementById(targetTab).classList.remove("hidden");
+      });
+    });
+  });
+</script>
 <%- include('partials/footer') %>

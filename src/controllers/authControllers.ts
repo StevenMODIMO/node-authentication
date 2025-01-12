@@ -96,10 +96,15 @@ const getLogout = (req: Request, res: Response) => {
   res.redirect("/login");
 };
 
+const postUpdateProfile = async (req: Request, res: Response) => {
+  const { email, password, profileUrl } = await req.body;
+};
+
 export {
   getSignup,
   getLogin,
   postSignup,
   postLogin,
   getLogout,
+  postUpdateProfile,
 };

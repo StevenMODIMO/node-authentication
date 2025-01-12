@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getLogout = exports.postLogin = exports.postSignup = exports.getLogin = exports.getSignup = void 0;
+exports.postUpdateProfile = exports.getLogout = exports.postLogin = exports.postSignup = exports.getLogin = exports.getSignup = void 0;
 const User_1 = __importDefault(require("../models/User"));
 const validator_1 = __importDefault(require("validator"));
 const bcrypt_1 = __importDefault(require("bcrypt"));
@@ -96,3 +96,7 @@ const getLogout = (req, res) => {
     res.redirect("/login");
 };
 exports.getLogout = getLogout;
+const postUpdateProfile = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { email, password, profileUrl } = yield req.body;
+});
+exports.postUpdateProfile = postUpdateProfile;
