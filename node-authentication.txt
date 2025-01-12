@@ -1,0 +1,56 @@
+node-authentication
+├── .env
+├── .gitignore
+├── dist
+│   ├── app.js
+│   ├── controllers
+│   │   └── authControllers.js
+│   ├── middleware
+│   │   └── requireAuth.js
+│   ├── models
+│   │   └── User.js
+│   ├── public
+│   │   ├── css
+│   │   │   ├── input.css
+│   │   │   └── output.css
+│   │   └── images
+│   │       └── favicon.svg
+│   ├── routes
+│   │   └── authRoutes.js
+│   └── views
+│       ├── home.ejs
+│       ├── login.ejs
+│       ├── partials
+│       │   ├── footer.ejs
+│       │   └── header.ejs
+│       ├── signup.ejs
+│       └── user.ejs
+├── package-lock.json
+├── package.json
+├── README.md
+├── src
+│   ├── app.ts
+│   ├── controllers
+│   │   └── authControllers.ts
+│   ├── middleware
+│   │   └── requireAuth.ts
+│   ├── models
+│   │   └── User.ts
+│   ├── public
+│   │   ├── css
+│   │   │   ├── input.css
+│   │   │   └── output.css
+│   │   └── images
+│   │       └── favicon.svg
+│   ├── routes
+│   │   └── authRoutes.ts
+│   └── views
+│       ├── home.ejs
+│       ├── login.ejs
+│       ├── partials
+│       │   ├── footer.ejs
+│       │   └── header.ejs
+│       ├── signup.ejs
+│       └── user.ejs
+├── tailwind.config.ts
+└── tsconfig.json

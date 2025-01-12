@@ -97,6 +97,6 @@ const getLogout = (req, res) => {
 };
 exports.getLogout = getLogout;
 const postUpdateProfile = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { email, password, profileUrl } = yield req.body;
+    const { profileUrl } = yield req.body;
 });
 exports.postUpdateProfile = postUpdateProfile;

@@ -97,7 +97,7 @@ const getLogout = (req: Request, res: Response) => {
 };
 
 const postUpdateProfile = async (req: Request, res: Response) => {
-  const { email, password, profileUrl } = await req.body;
+  const {  profileUrl } = await req.body;
 };
 
 export {
