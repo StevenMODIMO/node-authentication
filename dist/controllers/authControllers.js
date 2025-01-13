@@ -97,6 +97,7 @@ const getLogout = (req, res) => {
 };
 exports.getLogout = getLogout;
 const postUpdateProfile = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { profileUrl } = yield req.body;
+    const profileImage = yield req.file;
+    res.status(200).json(profileImage);
 });
 exports.postUpdateProfile = postUpdateProfile;

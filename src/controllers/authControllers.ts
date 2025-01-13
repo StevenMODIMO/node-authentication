@@ -4,6 +4,7 @@ import validator from "validator";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
+import { put } from "@vercel/blob";
 
 dotenv.config();
 
@@ -97,7 +98,8 @@ const getLogout = (req: Request, res: Response) => {
 };
 
 const postUpdateProfile = async (req: Request, res: Response) => {
-  const {  profileUrl } = await req.body;
+  const profileImage = await req.file;
+  res.status(200).json(profileImage);
 };
 
 export {
