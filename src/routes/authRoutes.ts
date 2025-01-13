@@ -5,8 +5,13 @@ import {
   postSignup,
   postLogin,
   getLogout,
-  postUpdateProfile
+  postUpdateProfile,
 } from "../controllers/authControllers";
+import multer from "multer";
+
+const storage = multer.memoryStorage()
+
+const upload = multer({ storage });
 
 const router = Router();
 
@@ -20,6 +25,10 @@ router.post("/login", postLogin);
 
 router.get("/logout", getLogout);
 
-router.post("/update-profile", postUpdateProfile)
+router.post(
+  "/update-profile",
+  upload.single("profileImage"),
+  postUpdateProfile
+);
 
 export default router;

@@ -4,6 +4,7 @@ const mongoose_1 = require("mongoose");
 const userSchena = new mongoose_1.Schema({
     email: String,
     password: String,
+    profileUrl: String
 });
 const User = (0, mongoose_1.model)("User", userSchena);
 exports.default = User;

@@ -34,7 +34,16 @@
         class="rounded-tr-md rounded-br-md absolute -left-[60%] top-0 pl-2 pt-10 h-full w-[60%] bg-green-700 bg-opacity-50 flex flex-col gap-3 transition-all duration-75 ease-in-out sm:hidden"
       >
         <% if (user) { %>
-        <li><a href="/user">Profile</a></li>
+        <li>
+          <a href="/user" class="flex items-center gap-1">
+            <img
+              src="<%= user.profileUrl %>"
+              alt="<%= user.id %>"
+              class="w-7 h-7 rounded-full"
+            />
+            <p>Profile</p>
+          </a>
+        </li>
         <li>
           <a href="/logout" class="flex items-center gap-1"
             ><i class="fa-solid fa-right-from-bracket"></i>
@@ -62,9 +71,18 @@
         </li>
         <% } %>
       </ul>
-      <ul class="hidden sm:flex gap-4 text-sm md:text-base">
+      <ul class="hidden sm:flex items-center gap-4 text-sm md:text-base">
         <% if (user) { %>
-        <li><a href="/user">Profile</a></li>
+        <li>
+          <a href="/user" class="flex items-center gap-1">
+            <img
+              src="<%= user.profileUrl %>"
+              alt="<%= user.id %>"
+              class="w-7 h-7 rounded-full"
+            />
+            <p>Profile</p>
+          </a>
+        </li>
         <li>
           <a href="/logout" class="flex items-center gap-1"
             ><i class="fa-solid fa-right-from-bracket"></i>

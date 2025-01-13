@@ -18,6 +18,7 @@ const validator_1 = __importDefault(require("validator"));
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const dotenv_1 = __importDefault(require("dotenv"));
+const blob_1 = require("@vercel/blob");
 dotenv_1.default.config();
 const maxAge = 3 * 24 * 60 * 60;
 const createToken = (id) => {
@@ -97,7 +98,26 @@ const getLogout = (req, res) => {
 };
 exports.getLogout = getLogout;
 const postUpdateProfile = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const profileImage = yield req.file;
-    res.status(200).json(profileImage);
+    const profileImage = req.file;
+    const { user } = res.locals;
+    if (!profileImage) {
+        return res.status(400).json({ message: "No file uploaded" });
+    }
+    try {
+        const fileContent = profileImage.buffer;
+        const { url } = yield (0, blob_1.put)(`profile-images/${profileImage.originalname}`, fileContent, {
+            contentType: profileImage.mimetype,
+            access: "public",
+        });
+        const update = yield User_1.default.findOneAndUpdate({ email: user.email }, { $set: { profileUrl: url } }, { new: true });
+        res.status(200).json({
+            message: "File uploaded successfully",
+            update,
+        });
+    }
+    catch (error) {
+        console.error("Error uploading to Vercel Blob:", error);
+        res.status(500).json({ message: "Error uploading file", error });
+    }
 });
 exports.postUpdateProfile = postUpdateProfile;

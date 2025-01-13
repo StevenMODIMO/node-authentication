@@ -98,8 +98,36 @@ const getLogout = (req: Request, res: Response) => {
 };
 
 const postUpdateProfile = async (req: Request, res: Response) => {
-  const profileImage = await req.file;
-  res.status(200).json(profileImage);
+  const profileImage = req.file;
+  const { user } = res.locals;
+
+  if (!profileImage) {
+    return res.status(400).json({ message: "No file uploaded" });
+  }
+
+  try {
+    const fileContent = profileImage.buffer;
+    const { url } = await put(
+      `profile-images/${profileImage.originalname}`,
+      fileContent,
+      {
+        contentType: profileImage.mimetype,
+        access: "public",
+      }
+    );
+    const update = await User.findOneAndUpdate(
+      { email: user.email },
+      { $set: { profileUrl: url } },
+      { new: true }
+    );
+    res.status(200).json({
+      message: "File uploaded successfully",
+      update,
+    });
+  } catch (error) {
+    console.error("Error uploading to Vercel Blob:", error);
+    res.status(500).json({ message: "Error uploading file", error });
+  }
 };
 
 export {

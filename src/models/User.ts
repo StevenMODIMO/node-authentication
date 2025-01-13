@@ -9,6 +9,7 @@ interface IUSER extends Document {
 const userSchena = new Schema<IUSER>({
   email: String,
   password: String,
+  profileUrl: String
 });
 
 const User = model<IUSER>("User", userSchena);
