@@ -31,39 +31,57 @@
       </div>
       <ul
         id="mobile-nav"
-        class="rounded-tr-md rounded-br-md absolute -left-[60%] top-0 pl-2 pt-10 h-full w-[60%] bg-green-700 bg-opacity-50 flex flex-col gap-3 transition-all duration-75 ease-in-out sm:hidden"
+        class="absolute -left-[65%] top-0 pl-2 pt-10 h-full font-semibold w-[65%] bg-black bg-opacity-70 flex flex-col items-start gap-3 transition-all duration-75 ease-in-out sm:hidden"
       >
         <% if (user) { %>
-        <li>
+        <li
+          class="bg-clip-text text-transparent bg-gradient-to-r from-green-500 to-green-300"
+        >
           <a href="/user" class="flex items-center gap-1">
+            <% if (user.profileUrl) { %>
             <img
               src="<%= user.profileUrl %>"
               alt="<%= user.id %>"
-              class="w-7 h-7 rounded-full"
+              class="w-5 h-5 rounded-full"
             />
+            <% } else { %>
+            <div
+              class="w-5 h-5 rounded-full bg-gray-300 flex items-center justify-center"
+            >
+              <i class="fa-solid fa-user text-gray-600"></i>
+            </div>
+            <% } %>
             <p>Profile</p>
           </a>
         </li>
-        <li>
+        <li
+          class="bg-clip-text text-transparent bg-gradient-to-r from-green-500 to-black"
+        >
           <a href="/logout" class="flex items-center gap-1"
             ><i class="fa-solid fa-right-from-bracket"></i>
             <p>Log out</p></a
           >
         </li>
         <% } else { %>
-        <li>
+        <li
+          class="bg-clip-text text-transparent bg-gradient-to-r from-green-500 to-black"
+        >
           <a href="/" class="flex items-center gap-1"
             ><i class="fa-solid fa-house"></i>
             <p>Home</p></a
           >
         </li>
-        <li>
+        <li
+          class="bg-clip-text text-transparent bg-gradient-to-r from-green-500 to-black"
+        >
           <a href="/signup" class="flex items-center gap-1"
             ><i class="fa-solid fa-user"></i>
             <p>Signup</p></a
           >
         </li>
-        <li>
+        <li
+          class="bg-clip-text text-transparent bg-gradient-to-r from-green-500 to-black"
+        >
           <a href="/login" class="flex items-center gap-1"
             ><i class="fa-solid fa-right-to-bracket"></i>
             <p>Log In</p></a
@@ -71,38 +89,58 @@
         </li>
         <% } %>
       </ul>
-      <ul class="hidden sm:flex items-center gap-4 text-sm md:text-base">
+      <ul
+        class="hidden sm:flex items-center gap-4 text-sm md:text-base font-semibold"
+      >
         <% if (user) { %>
-        <li>
+        <li
+          class="bg-clip-text text-transparent bg-gradient-to-r from-green-500 to-black"
+        >
           <a href="/user" class="flex items-center gap-1">
+            <% if (user.profileUrl) { %>
             <img
               src="<%= user.profileUrl %>"
               alt="<%= user.id %>"
               class="w-7 h-7 rounded-full"
             />
+            <% } else { %>
+            <div
+              class="w-7 h-7 rounded-full bg-gray-300 flex items-center justify-center"
+            >
+              <i class="fa-solid fa-user text-gray-600"></i>
+            </div>
+            <% } %>
             <p>Profile</p>
           </a>
         </li>
-        <li>
+        <li
+          class="bg-clip-text text-transparent bg-gradient-to-r from-green-500 to-black"
+        >
           <a href="/logout" class="flex items-center gap-1"
             ><i class="fa-solid fa-right-from-bracket"></i>
             <p>Log out</p></a
           >
         </li>
         <% } else { %>
-        <li>
+        <li
+          class="bg-clip-text text-transparent bg-gradient-to-r from-green-500 to-black"
+        >
           <a href="/" class="flex items-center gap-1"
             ><i class="fa-solid fa-house"></i>
             <p>Home</p></a
           >
         </li>
-        <li>
+        <li
+          class="bg-clip-text text-transparent bg-gradient-to-r from-green-500 to-black"
+        >
           <a href="/signup" class="flex items-center gap-1"
             ><i class="fa-solid fa-user"></i>
             <p>Signup</p></a
           >
         </li>
-        <li>
+        <li
+          class="bg-clip-text text-transparent bg-gradient-to-r from-green-500 to-black"
+        >
           <a href="/login" class="flex items-center gap-1"
             ><i class="fa-solid fa-right-to-bracket"></i>
             <p>Log In</p></a
@@ -130,14 +168,14 @@
     };
 
     open.addEventListener("click", () => {
-      nav.classList.remove("-left-[60%]");
+      nav.classList.remove("-left-[65%]");
       nav.classList.add("left-0");
       updateIcons();
     });
 
     close.addEventListener("click", () => {
       nav.classList.remove("left-0");
-      nav.classList.add("-left-[60%]");
+      nav.classList.add("-left-[65%]");
       updateIcons();
     });
 

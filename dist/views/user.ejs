@@ -1,34 +1,57 @@
 <%- include('partials/header') %>
 <section class="flex gap-3 p-2">
   <aside class="w-[20%] h-96 p-1 cursor-pointer border-r-2">
-    <div
-      data-tab="tab1"
-      class="tab-button p-1 text-green-500 rounded hover:bg-gradient-to-r hover:from-green-300 hover:to-green-100"
-    >
-      Profile
+    <div data-tab="tab1" class="tab-button p-1 flex gap-1 items-center">
+      <i class="fa-solid fa-user"></i>
+      <span class="hidden sm:block">Profile </span>
     </div>
-    <div
-      data-tab="tab2"
-      class="tab-button p-1 text-green-500 rounded hover:bg-gradient-to-r hover:from-green-300 hover:to-green-100"
-    >
-      Account
+    <div data-tab="tab2" class="tab-button p-1 flex gap-1 items-center">
+      <i class="fa-solid fa-pen"></i>
+      <span class="hidden sm:block">Account </span>
     </div>
-    <div
-      data-tab="tab3"
-      class="tab-button p-1 text-green-500 rounded hover:bg-gradient-to-r hover:from-green-300 hover:to-green-100"
-    >
-      Settings
+    <div data-tab="tab3" class="tab-button p-1 flex gap-1 items-center">
+      <i class="fa-solid fa-gear"></i>
+      <span class="hidden sm:block">Settings </span>
     </div>
   </aside>
   <main class="w-[70%]">
     <div class="tab-pane block" id="tab1">
-      <img
-        src="<%= user.profileUrl %>"
-        alt="<%= user.id %>"
-        class="w-12 h-12 rounded-full"
-      />
-      <p><%= user.email %></p>
-      <p><%= user.id %></p>
+      <div class="flex flex-col gap-2 font-semibold p-4">
+        <% if (user.profileUrl) { %>
+        <img
+          src="<%= user.profileUrl %>"
+          alt="<%= user.id %>"
+          class="w-28 h-28 rounded-full"
+        />
+        <% } else { %>
+        <div
+          class="w-28 h-28 rounded-full bg-gray-300 flex items-center justify-center"
+        >
+          <i class="fa-solid fa-user text-gray-600 text-2xl"></i>
+        </div>
+        <% } %>
+        <p
+          class="bg-clip-text text-transparent bg-gradient-to-r from-green-500 to-black flex flex-col gap-1"
+        >
+          <span class="font-bold text-black">Email:</span>
+          <%= user.email %>
+        </p>
+        <p
+          class="bg-clip-text text-transparent bg-gradient-to-r from-green-500 to-black text-xs flex flex-col gap-1"
+        >
+          <span class="font-bold text-base text-black">ID:</span>
+          <%= user.id %>
+        </p>
+        <p
+          class="bg-clip-text text-transparent bg-gradient-to-r from-green-500 to-black text-xs flex flex-col gap-1"
+        >
+          <span class="font-bold">
+            <span class="text-black">Joined:</span> <%= new
+            Date(user.createdAt).toLocaleDateString('en-US', { year: 'numeric',
+            month: 'long', day: 'numeric', }) %>
+          </span>
+        </p>
+      </div>
     </div>
     <div class="tab-pane hidden" id="tab2">Account details go here.</div>
     <div class="tab-pane hidden" id="tab3">Settings details go here.</div>
@@ -40,16 +63,16 @@
     const buttons = document.querySelectorAll(".tab-button");
     const panes = document.querySelectorAll(".tab-pane");
 
-    buttons[0].classList.add("bg-green-100", "font-bold");
+    buttons[0].classList.add("text-green-300", "font-bold");
     panes[0].classList.remove("hidden");
 
     buttons.forEach((button) => {
       button.addEventListener("click", () => {
         buttons.forEach((btn) =>
-          btn.classList.remove("bg-green-100", "font-bold")
+          btn.classList.remove("text-green-300", "font-bold")
         );
         panes.forEach((pane) => pane.classList.add("hidden"));
-        button.classList.add("bg-green-100", "font-bold");
+        button.classList.add("text-green-300", "font-bold");
         const targetTab = button.getAttribute("data-tab");
         document.getElementById(targetTab).classList.remove("hidden");
       });
