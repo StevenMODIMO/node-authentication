@@ -15,4 +15,5 @@ router.post("/signup", authControllers_1.postSignup);
 router.post("/login", authControllers_1.postLogin);
 router.get("/logout", authControllers_1.getLogout);
 router.post("/update-profile", upload.single("profileImage"), authControllers_1.postUpdateProfile);
+router.delete("/delete-account", authControllers_1.deleteAccount);
 exports.default = router;

@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.postUpdateProfile = exports.getLogout = exports.postLogin = exports.postSignup = exports.getLogin = exports.getSignup = void 0;
+exports.deleteAccount = exports.postUpdateProfile = exports.getLogout = exports.postLogin = exports.postSignup = exports.getLogin = exports.getSignup = void 0;
 const User_1 = __importDefault(require("../models/User"));
 const validator_1 = __importDefault(require("validator"));
 const bcrypt_1 = __importDefault(require("bcrypt"));
@@ -121,3 +121,14 @@ const postUpdateProfile = (req, res) => __awaiter(void 0, void 0, void 0, functi
     }
 });
 exports.postUpdateProfile = postUpdateProfile;
+const deleteAccount = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { user } = res.locals;
+    try {
+        yield User_1.default.findOneAndDelete({ email: user.email });
+        res.status(200).json({ message: "Account deleted successfully" });
+    }
+    catch (error) {
+        res.status(400).json(error);
+    }
+});
+exports.deleteAccount = deleteAccount;

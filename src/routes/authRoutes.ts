@@ -6,6 +6,7 @@ import {
   postLogin,
   getLogout,
   postUpdateProfile,
+  deleteAccount
 } from "../controllers/authControllers";
 import multer from "multer";
 
@@ -30,5 +31,7 @@ router.post(
   upload.single("profileImage"),
   postUpdateProfile
 );
+
+router.delete("/delete-account", deleteAccount)
 
 export default router;

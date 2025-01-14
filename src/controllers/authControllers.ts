@@ -130,6 +130,16 @@ const postUpdateProfile = async (req: Request, res: Response) => {
   }
 };
 
+const deleteAccount = async (req: Request, res: Response) => {
+  const { user } = res.locals;
+  try {
+    await User.findOneAndDelete({ email: user.email });
+    res.status(200).json({ message: "Account deleted successfully" });
+  } catch (error) {
+    res.status(400).json(error);
+  }
+};
+
 export {
   getSignup,
   getLogin,
@@ -137,4 +147,5 @@ export {
   postLogin,
   getLogout,
   postUpdateProfile,
+  deleteAccount,
 };

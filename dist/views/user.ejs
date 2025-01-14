@@ -54,7 +54,14 @@
       </div>
     </div>
     <div class="tab-pane hidden" id="tab2">Account details go here.</div>
-    <div class="tab-pane hidden" id="tab3">Settings details go here.</div>
+    <div class="tab-pane hidden" id="tab3">
+      <header class="font-bold">
+        <h1>Actons here can not be revived.</h1>
+      </header>
+      <button class="del-btn bg-red-500 p-2 rounded-md text-white my-4">
+        Delete account
+      </button>
+    </div>
   </main>
 </section>
 
@@ -78,5 +85,25 @@
       });
     });
   });
+
+  const delBtn = document.querySelector(".del-btn");
+  delBtn.addEventListener("click", async () => {
+  try {
+    const response = await fetch("/delete-account", {
+      method: "DELETE",
+    });
+
+    if (response.ok) {
+      window.location.href = "/";
+    } else {
+      const error = await response.json();
+      console.error("Error:", error);
+      alert("Failed to delete the account.");
+    }
+  } catch (err) {
+    alert("An error occurred. Please try again.");
+  }
+});
+
 </script>
 <%- include('partials/footer') %>
